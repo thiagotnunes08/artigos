@@ -8,8 +8,8 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class ImportaArtigosClient {
 
-    private RestTemplate restTemplate = new RestTemplate();
-    private String uri = "https://jsonmock.hackerrank.com/api/articles?author=";
+    private final RestTemplate restTemplate = new RestTemplate();
+    private final String uri = "https://jsonmock.hackerrank.com/api/articles?author=";
 
     public ArtigosImportadosResponse buscaArtigos(String nomeAutor) {
 
@@ -18,6 +18,8 @@ public class ImportaArtigosClient {
                     .getForEntity(uri + nomeAutor, ArtigosImportadosResponse.class);
 
             return responses.getBody();
+
+
 
 
         } catch (RestClientException exception) {

@@ -30,23 +30,10 @@ public class ImportaArtigosController {
 
         ArtigosImportadosResponse artigosImportadosResponse = client.buscaArtigos(resquest.getNomeAutor());
 
-        List<Artigos> artigosResponses = new ArrayList<>();
+        List<Artigos> artigosResponses = artigosImportadosResponse.toArtigos();
 
+        repository.saveAll(artigosResponses);
 
-        artigosImportadosResponse.getArtigosImportados().forEach(artigosRetornadosLambda -> {
-            if (artigosRetornadosLambda.getTitulo() != null) {
-                artigosResponses.add(repository.save(new Artigos(artigosRetornadosLambda.getTitulo(), artigosRetornadosLambda.getAutor())));
-                return;
-            }
-            if (artigosRetornadosLambda.getTituloHistoria() != null) {
-
-                artigosResponses.add(repository.save(new Artigos(artigosRetornadosLambda.getTituloHistoria(), artigosRetornadosLambda.getAutor())));
-
-
-            }
-
-
-        });
 
         return new ArtigosResponses(artigosResponses);
 
